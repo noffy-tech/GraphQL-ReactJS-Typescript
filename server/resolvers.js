@@ -1,7 +1,10 @@
 import bcrypt from "bcryptjs";
 import mongoose from "mongoose";
+import jwt from "jsonwebtoken";
+import { JWT_SECRETE_TOKEN } from "./config.js";
 
 const User = mongoose.model("User");
+const Post = mongoose.model("Post");
 
 const resolvers = {
   Query: {
@@ -20,6 +23,29 @@ const resolvers = {
         password: hashPassword,
       });
       return await NewUserEntry.save();
+    },
+    login: async (_, { user }) => {
+      const userDetails = await User.findOne({ email: user.email });
+      if (!userDetails) {
+        throw new Error("User does not exist");
+      }
+      const doMatch = await bcrypt.compare(user.password, userDetails.password);
+      if (!doMatch) {
+        throw new Error("Invalid Password!");
+      }
+      const token = jwt.sign({ userId: user._id }, JWT_SECRETE_TOKEN);
+      return { token };
+    },
+    createPost: async (_, { newPost }, { userId }) => {
+      if (!userId) {
+        throw new Error("Must be login");
+      }
+      const doPost = new Post({
+        ...newPost,
+        createdBy: userId,
+      });
+      await doPost.save();
+      return "Post created successfully";
     },
   },
 };

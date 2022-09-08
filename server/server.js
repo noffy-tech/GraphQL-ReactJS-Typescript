@@ -11,6 +11,7 @@ mongoose.connection.once("open", () => {
 });
 //All Schemas
 import "./modules/User.js";
+import "./modules/Post.js";
 
 // Resolvers
 import resolvers from "./resolvers.js";
