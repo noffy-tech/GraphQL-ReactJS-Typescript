@@ -36,16 +36,12 @@ const resolvers = {
       const token = jwt.sign({ userId: user._id }, JWT_SECRETE_TOKEN);
       return { token };
     },
-    createPost: async (_, { newPost }, { userId }) => {
-      if (!userId) {
-        throw new Error("Must be login");
-      }
+    createPost: async (_, { newPost }) => {
       const doPost = new Post({
         ...newPost,
-        createdBy: userId,
       });
-      await doPost.save();
-      return "Post created successfully";
+
+      return await doPost.save();
     },
   },
 };

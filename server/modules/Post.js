@@ -9,9 +9,6 @@ const postSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
-  createdBy: {
-    type: mongoose.Schema.Types.ObjectId,
-  },
 });
 
 mongoose.model("Post", postSchema);

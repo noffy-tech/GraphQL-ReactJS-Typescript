@@ -18,8 +18,6 @@ import resolvers from "./resolvers.js";
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  csrfPrevention: true,
-  cache: "bounded",
   plugins: [ApolloServerPluginLandingPageLocalDefault({ embed: true })],
 });
 
