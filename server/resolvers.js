@@ -5,7 +5,8 @@ const User = mongoose.model("User");
 
 const resolvers = {
   Query: {
-    users: () => User,
+    users: async () => await User.find({}),
+    user: async (_, { id }) => await User.findOne({ id }),
   },
   Mutation: {
     register: async (_, { newUser }) => {
