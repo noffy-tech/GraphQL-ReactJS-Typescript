@@ -5,12 +5,7 @@ interface Props {
 }
 
 function NonLogged({ children }: Props) {
-  return (
-    <div>
-      NonLogged
-      {children}
-    </div>
-  );
+  return <>{children}</>;
 }
 
 export default NonLogged;

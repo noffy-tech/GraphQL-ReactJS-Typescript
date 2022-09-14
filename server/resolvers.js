@@ -34,7 +34,14 @@ const resolvers = {
         throw new Error("Invalid Password!");
       }
       const token = jwt.sign({ userId: user._id }, JWT_SECRETE_TOKEN);
-      return { token };
+      const userData = {
+        userId: userDetails._id,
+        firstName: userDetails.firstName,
+        lastName: userDetails.lastName,
+        email: userDetails.email,
+        token,
+      };
+      return userData;
     },
     createPost: async (_, { newPost }) => {
       const doPost = new Post({

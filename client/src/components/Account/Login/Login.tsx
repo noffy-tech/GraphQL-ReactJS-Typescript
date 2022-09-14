@@ -11,16 +11,31 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import { useMutation } from "@apollo/client";
+import { LOGIN } from "../../gqlOperations/mutation";
 
 export default function SignIn() {
+  const [login, { data }] = useMutation(LOGIN);
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
+    login({
+      variables: {
+        user: {
+          email: data.get("email"),
+          password: data.get("password"),
+        },
+      },
     });
   };
+  if (data) {
+    window.location.href = "/dashboard";
+    localStorage.setItem("userId", data.login.userId);
+    localStorage.setItem("email", data.login.email);
+    localStorage.setItem("firstName", data.login.firstName);
+    localStorage.setItem("lastName", data.login.lastName);
+    localStorage.setItem("token", data.login.token);
+  }
 
   return (
     <>

@@ -20,13 +20,17 @@ const typeDefs = gql`
     title: String
     body: String
   }
-  type Token {
+  type Login {
+    userId: ID
+    firstName: String
+    lastName: String
     token: String
+    email: String
   }
   type Mutation {
     register(newUser: userInputs!): User
     createPost(newPost: postInput!): Post
-    login(user: loginInput!): Token
+    login(user: loginInput!): Login
   }
 
   input userInputs {
