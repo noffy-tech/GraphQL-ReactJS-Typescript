@@ -1,4 +1,4 @@
-import {gql} from "@apollo/client"
+import { gql } from "@apollo/client";
 
 export const LOGIN = gql`
   mutation loginUser($user: loginInput!) {
@@ -9,5 +9,5 @@ export const LOGIN = gql`
       email
       token
     }
-  }s
+  }
 `;
